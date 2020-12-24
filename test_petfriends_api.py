@@ -10,5 +10,16 @@ def test_get_api_key():
     data = res.json()
 
     assert res.status_code == 200
-    assert len(data['key']) == 20
+    assert len(data['key']) == 56
 
+
+def test_get_api_key_wrong_user():
+    """ Try to get API Key with wrong user and make sure
+        we can't get the key.
+    """
+
+    url = 'https://petfriends1.herokuapp.com/api/key'
+    res = requests.get(url, headers={'email': 'api2@mail.ru',
+                                     'password': 'TEST'})
+
+    assert res.status_code == 403
