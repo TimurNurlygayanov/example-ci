@@ -6,17 +6,15 @@ jobs:
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD
-        environment:
-          PIPENV_VENV_IN_PROJECT: true
-          DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
     steps:
       - checkout
       - run:
           command: |
+            mkdir test-results
             sudo pip install -r requirements.txt
       - run:
           command: |
-            pytest -v
+            pytest -v --junitxml=test-results/junit.xml
       - store_test_results:
           path: test-results
       - store_artifacts:
