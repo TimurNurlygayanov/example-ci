@@ -58,10 +58,10 @@ https://github.com/TimurNurlygayanov/example-ci и мы увидим
 
 После того, как pull request готов, Circle CI запустит наши 
 тесты, и, пока тесты не прошли, мы можем видеть такой статус:
-
+![Tests in progress](images/tests_in_progress.png)
 
 Когда тесты прошли, статус изменяется:
-
+![Tests passed](images/tests_passed.png)
 
 Примеры
 -------
