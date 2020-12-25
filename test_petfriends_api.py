@@ -62,7 +62,7 @@ def test_delete_pet():
     # Create new pet
     url = 'https://petfriends1.herokuapp.com/api/create_pet_simple'
     res = requests.post(url, headers={'auth_key': api_key},
-                        json={'name': 'Bob'})
+                        json={'name': 'Bob', 'animal_type': 'Dog', 'age': 5})
     pet_id_to_delete = res.json()['id']
 
     # Get list of my pets to make sure new pet is in list
