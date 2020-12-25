@@ -49,3 +49,33 @@ def test_get_list_of_pets():
 
     # Make sure that list of pets contains 100 elements
     assert len(all_pets) == 100
+
+
+def test_delete_pet():
+    """ Delete some pet from the list of my pets. """
+
+    url = 'https://petfriends1.herokuapp.com/api/key'
+    res = requests.get(url, headers={'email': 'api@mail.ru',
+                                     'password': 'test'})
+    api_key = res.json()['key']
+
+    # Get list of my pets
+    url = 'https://petfriends1.herokuapp.com/api/pets?filter=my_pets'
+    res = requests.get(url, headers={'auth_key': api_key})
+    all_pets = res.json()['pets']
+
+    # Get ID of first pet in list
+    pet_id_to_delete = all_pets[0]['id']
+
+    # Delete pet
+    url = 'https://petfriends1.herokuapp.com/api/pets/{0}'
+    res = requests.delete(url.format(pet_id_to_delete),
+                          headers={'auth_key': api_key})
+
+    # Get list of my pets
+    url = 'https://petfriends1.herokuapp.com/api/pets?filter=my_pets'
+    res = requests.get(url, headers={'auth_key': api_key})
+    all_pets = res.json()['pets']
+    all_pets_ids = [pet['id'] for pet in all_pets]
+
+    assert pet_id_to_delete not in all_pets_ids
