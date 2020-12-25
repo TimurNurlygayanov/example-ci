@@ -59,13 +59,19 @@ def test_delete_pet():
                                      'password': 'test'})
     api_key = res.json()['key']
 
-    # Get list of my pets
+    # Create new pet
+    url = 'https://petfriends1.herokuapp.com/api/create_pet_simple'
+    res = requests.post(url, headers={'auth_key': api_key},
+                        json={'name': 'Bob'})
+    pet_id_to_delete = res.json()['id']
+
+    # Get list of my pets to make sure new pet is in list
     url = 'https://petfriends1.herokuapp.com/api/pets?filter=my_pets'
     res = requests.get(url, headers={'auth_key': api_key})
     all_pets = res.json()['pets']
+    all_pets_ids = [pet['id'] for pet in all_pets]
 
-    # Get ID of first pet in list
-    pet_id_to_delete = all_pets[0]['id']
+    assert pet_id_to_delete in all_pets_ids
 
     # Delete pet
     url = 'https://petfriends1.herokuapp.com/api/pets/{0}'
