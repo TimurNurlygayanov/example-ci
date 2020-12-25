@@ -68,6 +68,7 @@ def test_get_list_of_my_pets():
     all_pets = res.json()['pets']
 
     # Collect UserIDs for all pets in this list:
+    assert 'a' in all_pets
     users_ids = set([pet['user_id'] for pet in all_pets])
 
     # Make sure that list contains only my pets:
