@@ -49,3 +49,15 @@ def test_get_list_of_pets():
 
     # Make sure that list of pets contains 100 elements
     assert len(all_pets) == 100
+
+
+def test_get_list_of_pets_without_key():
+    """ Try to get list of pets without auth_key. """
+
+    # Get list of pets (API returns only latest 100 elements)
+    url = 'https://petfriends1.herokuapp.com/api/pets'
+    res = requests.get(url)
+    all_pets = res.json()['pets']
+
+    # Make sure that list of pets contains 100 elements
+    assert len(all_pets) == 100
