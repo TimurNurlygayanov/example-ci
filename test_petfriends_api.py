@@ -49,3 +49,24 @@ def test_get_list_of_pets():
 
     # Make sure that list of pets contains 100 elements
     assert len(all_pets) == 100
+
+
+def test_get_list_of_my_pets():
+    """ Get list of only my pets and make
+        sure it is not empty.
+    """
+
+    # Get API key
+    url = 'https://petfriends1.herokuapp.com/api/key'
+    res = requests.get(url, headers={'email': 'api@mail.ru',
+                                     'password': 'test'})
+    api_key = res.json()['key']
+
+    # Get list of my pets
+    url = 'https://petfriends1.herokuapp.com/api/pets?filter=my_pets'
+    res = requests.get(url, headers={'auth_key': api_key})
+    all_pets = res.json()['pets']
+
+    # Make sure that list contains some pets:
+    assert len(all_pets) > 0, 'The list is empty!'
+    assert 'user_id' not in all_pets[0], 'Not only my pets in the list!'
